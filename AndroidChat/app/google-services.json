@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "117632788295",
+    "firebase_url": "https://androidchat-4206f.firebaseio.com",
+    "project_id": "androidchat-4206f",
+    "storage_bucket": "androidchat-4206f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117632788295:android:66d9ee082ad20f6f",
+        "android_client_info": {
+          "package_name": "edu.galileo.android.androidchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "117632788295-2tkcnr57ikk5lhsec5lpm0ievh00fr5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMXer9BOq_xqgIWp9jlfl3jTM4kejMWe8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
