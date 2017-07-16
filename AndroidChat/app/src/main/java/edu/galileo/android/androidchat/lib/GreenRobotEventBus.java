@@ -2,9 +2,10 @@ package edu.galileo.android.androidchat.lib;
 
 /**
  * Created by Alejandro on 27/5/2017.
+ * clase la que me permite implementar EventBus para hacer call back y mostrar por pantalla
  */
 public class GreenRobotEventBus implements EventBus {
-    de.greenrobot.event.EventBus eventBus;
+    org.greenrobot.eventbus.EventBus eventBus;
 
     /**
      * Clase privada para hacer singleton el cual me devuelve un atributo que llama a la clase GreenRobotEventBus
@@ -18,7 +19,7 @@ public class GreenRobotEventBus implements EventBus {
     }
 
     public GreenRobotEventBus() {
-        this.eventBus = de.greenrobot.event.EventBus.getDefault();
+        this.eventBus = org.greenrobot.eventbus.EventBus.getDefault();
     }
 
     @Override

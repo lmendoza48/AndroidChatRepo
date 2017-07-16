@@ -8,4 +8,7 @@
     <string name="login.error.message.signin">Imposible Inciar Sesion %s</string>
     <string name="login.notice.message.signup">Usuario agregado exitosamente</string>
     <string name="login.notice.message.signupSend">Campos Vacios</string>
+
+    <string name="contactlist.menu.action.signoff">Cerrar Sesion</string>
+    <string name="contactlist.title">Contacto</string>
 </resources>
