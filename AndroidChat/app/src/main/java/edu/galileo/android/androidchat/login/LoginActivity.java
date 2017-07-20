@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +14,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import edu.galileo.android.androidchat.R;
-import edu.galileo.android.androidchat.contactlist.ContactListActivity;
+import edu.galileo.android.androidchat.contactlist.ui.ContactListActivity;
 import edu.galileo.android.androidchat.implement.LoginPresenterImpl;
 
 /**

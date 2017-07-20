@@ -11,14 +11,15 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".login.LoginActivity" >
+        <activity
+            android:name=".login.LoginActivity"
+            android:screenOrientation="portrait"><!-- para colocar orientacion todo: LandEscape "horizontal" y Portrait "vertical" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".contactlist.ContactListActivity"
+        <activity android:name=".contactlist.ui.ContactListActivity"
             android:label="@string/contactlist.title"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>

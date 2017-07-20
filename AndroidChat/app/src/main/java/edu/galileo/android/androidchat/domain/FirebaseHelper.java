@@ -62,13 +62,16 @@ public class FirebaseHelper {
      * @return Email
      */
     public String getAuthUserEmail(){
-        FirebaseUser usersAutentic =  myAuthentiUser.getCurrentUser();
-        String email = null;
-        if(usersAutentic != null){
-            //Map<String, Object> providerData = usersAutentic.getProviderData();
-            email = usersAutentic.getEmail();
+       if(myAuthentiUser != null){
+            FirebaseUser usersAutentic = myAuthentiUser.getCurrentUser();
+            String email = null;
+            if (usersAutentic != null) {
+                //Map<String, Object> providerData = usersAutentic.getProviderData();
+                email = usersAutentic.getEmail();
+            }
+           return email;
         }
-        return email;
+        return "";
     }
 /*-----------------------------------------------------------------------*/
 /*metodo para obtner el email del usuario el .child es el que me permite recojer los datos del json es decir de una de las ramas

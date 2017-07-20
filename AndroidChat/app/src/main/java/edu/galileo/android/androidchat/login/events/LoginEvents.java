@@ -10,7 +10,7 @@ public class LoginEvents {
     public final static int onSignInSucces = 2;
     public final static int onSignUpSucces = 3;
     public final static int onFailedToRecoverSession = 4;// atributo para saber si existe una sesion abierta y poder recuperarla
-    public final static int onSignInErrorSend = 5;
+    public final static int onSignInErrorSend = 5; // atributo para saber si tengo datos al autenticarme o crear un usuario
     private int eventType;
     private String errorMessage;
 
