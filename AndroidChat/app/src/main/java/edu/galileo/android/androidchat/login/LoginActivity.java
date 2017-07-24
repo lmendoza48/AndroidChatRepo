@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import edu.galileo.android.androidchat.R;
 import edu.galileo.android.androidchat.contactlist.ui.ContactListActivity;
-import edu.galileo.android.androidchat.implement.LoginPresenterImpl;
+import edu.galileo.android.androidchat.login.implement.LoginPresenterImpl;
 
 /**
  * clase principal my activity de login

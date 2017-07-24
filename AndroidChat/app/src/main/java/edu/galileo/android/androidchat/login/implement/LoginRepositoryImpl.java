@@ -1,18 +1,15 @@
-package edu.galileo.android.androidchat.implement;
+package edu.galileo.android.androidchat.login.implement;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.firebase.client.AuthData;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 import edu.galileo.android.androidchat.domain.FirebaseHelper;
 import edu.galileo.android.androidchat.entities.User;
@@ -27,15 +24,13 @@ import edu.galileo.android.androidchat.login.events.LoginEvents;
  */
 public class LoginRepositoryImpl implements LoginRepository {
     private FirebaseHelper firebaseHelper;
-    private Firebase dataReference;
-    private Firebase myUserReference;
     private FirebaseAuth myAuthentiUser;
 
     public LoginRepositoryImpl() {
         this.firebaseHelper = FirebaseHelper.getInstance();
         this.myAuthentiUser = FirebaseAuth.getInstance();
-        this.dataReference = firebaseHelper.getDataReference();
-        this.myUserReference = firebaseHelper.getMyUserReference();
+      //  this.dataReference = firebaseHelper.getDataReference();
+       // this.myUserReference = firebaseHelper.getMyUserReference();
     }
 
     /**
@@ -90,13 +85,13 @@ public class LoginRepositoryImpl implements LoginRepository {
     @Override
     public void checkSession() {
         // datareference.getAuth es igual a myAuthentiUser.getCurrentUser()
-       /*if (myAuthentiUser.getCurrentUser()!=null){
-          // getMyAuthenticUser();
+       if (myAuthentiUser.getCurrentUser()!=null){
+          getMyAuthenticUser();
         }else{
-
-       }*/
+           postEvent(LoginEvents.onFailedToRecoverSession);
+       }
         //Log.e("LoginRepositoryImpl", "checksesion");
-        postEvent(LoginEvents.onFailedToRecoverSession);
+       // postEvent(LoginEvents.onFailedToRecoverSession);
     }
 
     /**
@@ -133,6 +128,4 @@ public class LoginRepositoryImpl implements LoginRepository {
         EventBus eventBus = GreenRobotEventBus.getInstance();
         eventBus.post(loginEvents);
     }
-
-
 }

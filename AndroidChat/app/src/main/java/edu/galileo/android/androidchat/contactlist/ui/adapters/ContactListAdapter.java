@@ -72,6 +72,41 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         return contactList.size();
     }
 
+    /**
+     * metodo para agregar un contacto
+     * error esta al ver los contactoc en el contains
+     * @param user
+     */
+    public void add(User user) {
+        if (!contactList.contains(user)){
+            contactList.add(user);
+            notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * metodo para actualizar el estado de un usario
+     * @param user
+     */
+    public void update(User user) {
+        if (contactList.contains(user)){
+            int index = contactList.indexOf(user);
+            contactList.set(index,user);
+            notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * metodo para eliminar un usario
+     * @param user
+     */
+    public void remove(User user) {
+        if (contactList.contains(user)){
+            contactList.remove(user);
+            notifyDataSetChanged();
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.imageView)
         CircleImageView imageView;

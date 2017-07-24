@@ -1,4 +1,4 @@
-package edu.galileo.android.androidchat.implement;
+package edu.galileo.android.androidchat.login.implement;
 
 import android.util.Log;
 

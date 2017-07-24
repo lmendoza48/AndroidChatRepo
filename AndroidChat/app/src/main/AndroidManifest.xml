@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".login.LoginActivity"
-            android:screenOrientation="portrait"><!-- para colocar orientacion todo: LandEscape "horizontal" y Portrait "vertical" -->
+            android:screenOrientation="portrait"
+            android:noHistory="true"><!-- para colocar orientacion todo: LandEscape "horizontal" y Portrait "vertical" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

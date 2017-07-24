@@ -1,12 +1,18 @@
 package edu.galileo.android.androidchat.contactlist.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -17,11 +23,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import edu.galileo.android.androidchat.R;
 import edu.galileo.android.androidchat.contactlist.ContactListPresenter;
+import edu.galileo.android.androidchat.contactlist.ContactListPresenterImpl;
 import edu.galileo.android.androidchat.contactlist.ui.adapters.ContactListAdapter;
 import edu.galileo.android.androidchat.contactlist.ui.adapters.OnItemClickListener;
 import edu.galileo.android.androidchat.entities.User;
 import edu.galileo.android.androidchat.lib.GlideImageLoader;
 import edu.galileo.android.androidchat.lib.ImageLoading;
+import edu.galileo.android.androidchat.login.LoginActivity;
 
 public class ContactListActivity extends AppCompatActivity implements ContactListView, OnItemClickListener {
 
@@ -42,9 +50,40 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
 
         setupAdapter();
         setupRecyclerView();
-       // contactListPresenter.onCreate();
+        contactListPresenter = new ContactListPresenterImpl(this);
+        contactListPresenter.onCreate();
         setupToolBar();
 
+    }
+
+    /**
+     * metodo para crear el menu los tres punticos
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_contactlist, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * metodo para hacer algo cuando se presione el item
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_layout){
+            contactListPresenter.singOff();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                           | Intent.FLAG_ACTIVITY_NEW_TASK
+                           | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupRecyclerView() {
@@ -54,23 +93,24 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
 
     /**
      * metodo para cargar el adapter y mostrar el avatar de mi img
+     * * Datos de prueba TODO User user = new User();
+                            user.setEmail("luis@gmail.com");
+                            user.setOnline(true);
+     Arrays.asList(new User[]{user})
      */
     private void setupAdapter() {
         ImageLoading loader = new GlideImageLoader(this.getApplicationContext());
-        User user = new User();
-        user.setEmail("luis@gmail.com");
-        user.setOnline(true);
-        adapter = new ContactListAdapter(Arrays.asList(new User[]{user}), loader, this);
+        adapter = new ContactListAdapter(new ArrayList<User>(), loader, this);
     }
 
     /**
      * metodo para cargar el toolbar
      */
     private void setupToolBar() {
-      //  toolbar.setTitle(contactListPresenter.getCurrentUserEmail());
+        toolbar.setTitle(contactListPresenter.getCurrentUserEmail());
         setSupportActionBar(toolbar);
     }
-/**
+
     @Override
     protected void onDestroy() {
         contactListPresenter.onDestroy();
@@ -88,7 +128,7 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
         contactListPresenter.onPause();
         super.onPause();
     }
-*/
+
     /**
      * metodo para agregar los contactos con el manejo del click
      */
@@ -103,6 +143,7 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
      */
     @Override
     public void onContactAdd(User user) {
+        adapter.add(user);
 
     }
 
@@ -112,7 +153,7 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
      */
     @Override
     public void onContactChanged(User user) {
-
+        adapter.update(user);
     }
 
     /**
@@ -121,16 +162,24 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
      */
     @Override
     public void onContactRemoved(User user) {
-
+        adapter.remove(user);
     }
 
+    /**
+     * este metedo es para hacer click sobre un elemento de mi lista hacer algo
+     * @param user
+     */
     @Override
     public void onItemClick(User user) {
-
+        Toast.makeText(this , user.getEmail(),Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * metodo el cual me permite eliminar un contacto con un click largo
+     * @param user
+     */
     @Override
     public void onItemLongClick(User user) {
-
+        contactListPresenter.removeContact(user.getEmail());
     }
 }
