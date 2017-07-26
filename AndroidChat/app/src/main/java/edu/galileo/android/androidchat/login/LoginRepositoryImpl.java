@@ -9,7 +9,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import edu.galileo.android.androidchat.domain.FirebaseHelper;
 import edu.galileo.android.androidchat.entities.User;
@@ -29,8 +32,6 @@ public class LoginRepositoryImpl implements LoginRepository {
     public LoginRepositoryImpl() {
         this.firebaseHelper = FirebaseHelper.getInstance();
         this.myAuthentiUser = FirebaseAuth.getInstance();
-      //  this.dataReference = firebaseHelper.getDataReference();
-       // this.myUserReference = firebaseHelper.getMyUserReference();
     }
 
     /**
@@ -65,12 +66,16 @@ public class LoginRepositoryImpl implements LoginRepository {
     @Override
     public void signUp(final String email, final String password) {
         if (!email.isEmpty() && !password.isEmpty()) {
+            final User userConect = new User();
             myAuthentiUser.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        userConect.setEmail(email);
+                        userConect.setOnline(User.ONLINE);
+                        saveOfUser(userConect);
                         postEvent(LoginEvents.onSignUpSucces);
-                        signIn(email, password);
+                        signIn(email,password);
                     } else {
                         postEvent(LoginEvents.onSignUpError, task.getException().getMessage());
                     }
@@ -82,6 +87,30 @@ public class LoginRepositoryImpl implements LoginRepository {
         }
     }
 
+    /**
+     * metodo para guardar usuario luego de crearlo y iniciar sesion
+     * TODO: solo inicio sesion por aqui cuando estoy agregando el usuario
+     * @param user
+     */
+    private void saveOfUser(final User user) {
+        final DatabaseReference userReference = firebaseHelper.getMyUserReference();
+        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userReference.child(firebaseHelper.EMAIL_PATH).setValue(user.getEmail());
+                userReference.child(firebaseHelper.STATE_PATH).setValue(user.isOnline());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                postEvent(LoginEvents.onSignInErrorSend);
+            }
+        });
+    }
+
+    /**
+     * metodo para verificar si existe una sesion activa
+     */
     @Override
     public void checkSession() {
         // datareference.getAuth es igual a myAuthentiUser.getCurrentUser()
@@ -95,20 +124,16 @@ public class LoginRepositoryImpl implements LoginRepository {
     }
 
     /**
-     * metodo para obtener datos de sesion activa
+     * metodo para obtener datos Usuario autenticado
      */
     public void getMyAuthenticUser() {
-        User currentUser;
         FirebaseUser myCurrentUser = myAuthentiUser.getCurrentUser();
         if (myCurrentUser != null){
-            String email = myCurrentUser.getEmail();
-            if (email != null){
-                currentUser = new User();
-                currentUser.setEmail(email);
-            }
+            firebaseHelper.changeUserCOnectionStatus(User.ONLINE); // para actualizar estado y para guardar estatus
+            postEvent(LoginEvents.onSignInSucces);
+        }else{
+            postEvent(LoginEvents.onSignInError);
         }
-        firebaseHelper.changeUserCOnectionStatus(User.ONLINE);
-        postEvent(LoginEvents.onSignInSucces);
     }
 
     /**

@@ -33,20 +33,27 @@ public class AddContactRepositoryImpl implements AddContactRepository {
         final String key = email.replace(".","_");
         DatabaseReference userReference = helper.getUserReference(email);
         userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            /**
+             * aqui estoy viendo los datos del nodo al que hago referencia con userReference
+             * @param dataSnapshot
+             */
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class); // para que firebase llene todos lo campos necesarios
                 if (user != null){
-                    DatabaseReference  myUserContactReference = helper.getMyContactReference();
-                    myUserContactReference.child(key).setValue(user.isOnline()); //agrego contacto en mi lista y lo coloco como desconectado
+                        //agrego contacto en mi lista y lo coloco como desconectado
+                        DatabaseReference myUserContactReference = helper.getMyContactReference();
+                        myUserContactReference.child(key).setValue(user.isOnline());
 
-                    /**Aqui estoy agregando al usuario en la lista de contacto de la persona y aparesco como conectado*/
-                    String currenUserKey = helper.getAuthUserEmail();
-                    currenUserKey = currenUserKey.replace(".","_");
-                    DatabaseReference reverseContactReference = helper.getContactReference(email);
-                    reverseContactReference.child(currenUserKey).setValue(User.ONLINE);
+                        /**Aqui estoy agregando al usuario en la lista de contacto de la persona y aparesco como conectado*/
+                        String currenUserKey = helper.getAuthUserEmail();
+                        currenUserKey = currenUserKey.replace(".", "_");
+                        DatabaseReference reverseContactReference = helper.getContactReference(email);
+                        reverseContactReference.child(currenUserKey).setValue(User.ONLINE);
 
-                    potSuccesFull();
+                        potSuccesFull();
+
+
                 }else{
                     postError();
                 }
@@ -59,15 +66,17 @@ public class AddContactRepositoryImpl implements AddContactRepository {
         });
     }
 
+    /**
+     * metodos para saber si se guardo con exito o existe
+     * algun error
+     */
     private void potSuccesFull(){
         post(false);
     }
-    /**
-     * para postear cualquier error que ocurra
-     */
     private void postError(){
         post(true);
     }
+
     private void post(boolean error) {
         AddContactEvent event = new AddContactEvent();
             event.setErrorMesage(error);

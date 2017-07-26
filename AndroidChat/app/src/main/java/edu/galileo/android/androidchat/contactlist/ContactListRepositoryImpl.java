@@ -123,6 +123,6 @@ public class ContactListRepositoryImpl implements ContactListRepository {
 
     @Override
     public void changedConnectionStatus(boolean online) {
-
+        helper.changeUserCOnectionStatus(online);
     }
 }

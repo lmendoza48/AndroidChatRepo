@@ -27,9 +27,11 @@ public class FirebaseHelper {
     private DatabaseReference mDatabase;
     private FirebaseAuth  myAuthentiUser;
     private final static String SEPARETER = "___";
-    private final static String USER_PATH ="users";
+    public  final static String USER_PATH ="users";
     private final static String CONTACT_PATH ="contacts";
     private final static String CHAT_PATH ="chats";
+    public static String EMAIL_PATH="email";
+    public static String STATE_PATH="online";
     private final static String FIREBASE_URL="https://androidchat-4206f.firebaseio.com"; //"https://chatandroid-b3f8b.firebaseio.com"; // "https://androidchat-4206f.firebaseio.com";
 
     /**
@@ -163,13 +165,12 @@ public class FirebaseHelper {
                 /*aqui lo q estoy haciendo es avisando a mis contacto que estoy conectado o desconectado*/
                 for (com.google.firebase.database.DataSnapshot child : dataSnapshot.getChildren()){
                     String email = child.getKey();
-                    DatabaseReference reference = getOneContactReference(myEmail,email);
-                    reference.setValue(online);
-                }
-                /*solo si quiero cerrar sesion luego de abrirla*/
-                if (signOff){
-                    //dataReference.unauth();
-                    myAuthentiUser.signOut();
+                    DatabaseReference reference = getOneContactReference(email,myEmail);
+                    reference.setValue(online); // aqui cambio el estatu de conexion mio en los contacto de la otra persona
+                    // para ver si quiero cerrar session luego de iniciar
+                    if (signOff){
+                        myAuthentiUser.signOut();
+                    }
                 }
             }
             @Override

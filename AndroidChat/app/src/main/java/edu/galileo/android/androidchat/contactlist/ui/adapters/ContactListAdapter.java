@@ -74,7 +74,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     /**
      * metodo para agregar un contacto
-     * error esta al ver los contactoc en el contains
+     * si estoy en la lista no lo agrego con contains
      * @param user
      */
     public void add(User user) {

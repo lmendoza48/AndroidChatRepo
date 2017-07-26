@@ -110,7 +110,8 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
     }
 
     /**
-     * metodo para cargar el toolbar
+     * metodo para cargar el toolbar y mostrar el email
+     * del usuario conectado
      */
     private void setupToolBar() {
         toolbar.setTitle(contactListPresenter.getCurrentUserEmail());
