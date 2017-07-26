@@ -1,7 +1,8 @@
-package edu.galileo.android.androidchat.login.implement;
+package edu.galileo.android.androidchat.login;
 
 import edu.galileo.android.androidchat.login.LoginInteractor;
 import edu.galileo.android.androidchat.login.LoginRepository;
+import edu.galileo.android.androidchat.login.LoginRepositoryImpl;
 
 /**
  * Created by Alejandro on 21/5/2017.

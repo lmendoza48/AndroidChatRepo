@@ -1,4 +1,4 @@
-package edu.galileo.android.androidchat.login;
+package edu.galileo.android.androidchat.login.ui;
 
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
@@ -15,12 +15,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import edu.galileo.android.androidchat.R;
 import edu.galileo.android.androidchat.contactlist.ui.ContactListActivity;
-import edu.galileo.android.androidchat.login.implement.LoginPresenterImpl;
+import edu.galileo.android.androidchat.login.LoginPresenter;
+import edu.galileo.android.androidchat.login.LoginPresenterImpl;
 
 /**
  * clase principal my activity de login
  */
-public class LoginActivity extends AppCompatActivity implements LoginView{
+public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Bind(R.id.inputEmail)
     EditText inputEmail;

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".login.ui.LoginActivity"
             android:screenOrientation="portrait"
             android:noHistory="true"><!-- para colocar orientacion todo: LandEscape "horizontal" y Portrait "vertical" -->
             <intent-filter>

@@ -1,4 +1,4 @@
-package edu.galileo.android.androidchat.login.implement;
+package edu.galileo.android.androidchat.login;
 
 import android.util.Log;
 
@@ -6,9 +6,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import edu.galileo.android.androidchat.lib.EventBus;
 import edu.galileo.android.androidchat.lib.GreenRobotEventBus;
-import edu.galileo.android.androidchat.login.LoginInteractor;
-import edu.galileo.android.androidchat.login.LoginPresenter;
-import edu.galileo.android.androidchat.login.LoginView;
+import edu.galileo.android.androidchat.login.ui.LoginView;
 import edu.galileo.android.androidchat.login.events.LoginEvents;
 
 /**

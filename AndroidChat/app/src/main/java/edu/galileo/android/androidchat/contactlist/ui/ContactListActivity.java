@@ -3,25 +3,21 @@ package edu.galileo.android.androidchat.contactlist.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import edu.galileo.android.androidchat.R;
+import edu.galileo.android.androidchat.addContacts.ui.AddContactsFragment;
 import edu.galileo.android.androidchat.contactlist.ContactListPresenter;
 import edu.galileo.android.androidchat.contactlist.ContactListPresenterImpl;
 import edu.galileo.android.androidchat.contactlist.ui.adapters.ContactListAdapter;
@@ -29,7 +25,7 @@ import edu.galileo.android.androidchat.contactlist.ui.adapters.OnItemClickListen
 import edu.galileo.android.androidchat.entities.User;
 import edu.galileo.android.androidchat.lib.GlideImageLoader;
 import edu.galileo.android.androidchat.lib.ImageLoading;
-import edu.galileo.android.androidchat.login.LoginActivity;
+import edu.galileo.android.androidchat.login.ui.LoginActivity;
 
 public class ContactListActivity extends AppCompatActivity implements ContactListView, OnItemClickListener {
 
@@ -74,16 +70,26 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_layout){
-            contactListPresenter.singOff();
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                           | Intent.FLAG_ACTIVITY_NEW_TASK
-                           | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-
+        switch (item.getItemId()){
+            case R.id.action_layout:
+                getClosingSesion();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+        return true;
+    }
+
+    /**
+     * metodo para cerrar sesion
+     */
+    private void getClosingSesion() {
+        contactListPresenter.singOff();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                       | Intent.FLAG_ACTIVITY_NEW_TASK
+                       | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     private void setupRecyclerView() {
@@ -134,7 +140,7 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
      */
     @OnClick(R.id.fab)
     public void addContact(){
-
+        new AddContactsFragment().show(getSupportFragmentManager(), getString(R.string.addcontact_message_title));
     }
 
     /**
