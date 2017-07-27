@@ -123,7 +123,7 @@ public class FirebaseHelper {
     }
 
     /*metodo para obtner la referencia de los chat*/
-    public Firebase getChatsReference(String receiver){
+    public DatabaseReference getChatsReference(String receiver){
         String keySender = getAuthUserEmail().replace(".", "_");
         String keyReceiver = receiver.replace(".","_");
 
@@ -131,7 +131,7 @@ public class FirebaseHelper {
         if(keySender.compareTo(keyReceiver)> 0) {
             keyChat = keyReceiver + SEPARETER + keySender;
         }
-        return dataReference.getRoot().child(CHAT_PATH).child(keyChat);
+        return mDatabase.child(CHAT_PATH).child(keyChat);
     }
     /* metodo para ver el estatus de conexion*/
     public void changeUserCOnectionStatus(boolean online){
