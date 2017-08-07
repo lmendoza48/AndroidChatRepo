@@ -1,6 +1,7 @@
 package edu.galileo.android.androidchat.login.ui;
 
 import android.content.Intent;
+import android.media.UnsupportedSchemeException;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import edu.galileo.android.androidchat.R;
+import edu.galileo.android.androidchat.addUser.ui.AddUsersActivity;
 import edu.galileo.android.androidchat.contactlist.ui.ContactListActivity;
 import edu.galileo.android.androidchat.login.LoginPresenter;
 import edu.galileo.android.androidchat.login.LoginPresenterImpl;
@@ -43,10 +45,21 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
         loginPresenter = new LoginPresenterImpl(this);
-        loginPresenter.onCreate();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loginPresenter.onResume();
         loginPresenter.checkForAuthenticatedUsers(); // para validar a los usuario y verificar q no exista ningun session
+    }
+
+    @Override
+    protected void onPause() {
+        loginPresenter.onPause();
+        super.onPause();
     }
 
     @Override
@@ -88,8 +101,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @OnClick(R.id.btnSingUp)
     @Override
     public void handleSignUp() {
-        loginPresenter.registerNewUsers(inputEmail.getText().toString(),
-                inputPassword.getText().toString());
+        /*loginPresenter.registerNewUsers(inputEmail.getText().toString(),
+                inputPassword.getText().toString());*///old metod para agregar usuario
+        startActivity(new Intent(this, AddUsersActivity.class));
     }
     /*
     * Para ingresar usuario Registrado
@@ -126,7 +140,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
      */
     @Override
     public void newUsersSuccess() {
-        Snackbar.make(container,R.string.login_notice_message_signup,Snackbar.LENGTH_LONG).show();
+        throw new UnsupportedOperationException("Operation is not valid in LoginActivity");
     }
 
     /**
@@ -144,9 +158,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
      */
     @Override
     public void newUsersErrors(String error) {
-        inputPassword.setText("");
-        String msgError = String.format(getString(R.string.login_error_message_signup),error);
-        inputPassword.setError(msgError);
+        throw new UnsupportedOperationException("Operation is not valid in LoginActivity");
     }
 
     /**

@@ -30,17 +30,18 @@ public class AddContactRepositoryImpl implements AddContactRepository {
      */
     @Override
     public void addContact(final String email) {
-        final String key = email.replace(".","_");
-        DatabaseReference userReference = helper.getUserReference(email);
-        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            /**
-             * aqui estoy viendo los datos del nodo al que hago referencia con userReference
-             * @param dataSnapshot
-             */
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class); // para que firebase llene todos lo campos necesarios
-                if (user != null){
+        if (!email.isEmpty()) {
+            final String key = email.replace(".", "_");
+            DatabaseReference userReference = helper.getUserReference(email);
+            userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                /**
+                 * aqui estoy viendo los datos del nodo al que hago referencia con userReference
+                 * @param dataSnapshot
+                 */
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class); // para que firebase llene todos lo campos necesarios
+                    if (user != null) {
                         //agrego contacto en mi lista y lo coloco como desconectado
                         DatabaseReference myUserContactReference = helper.getMyContactReference();
                         myUserContactReference.child(key).setValue(user.isOnline());
@@ -51,36 +52,38 @@ public class AddContactRepositoryImpl implements AddContactRepository {
                         DatabaseReference reverseContactReference = helper.getContactReference(email);
                         reverseContactReference.child(currenUserKey).setValue(User.ONLINE);
 
-                        potSuccesFull();
+                        potEvent(AddContactEvent.addContactSucces);
 
 
-                }else{
-                    postError();
+                    } else {
+                        potEvent(AddContactEvent.onFailedError);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                postError();
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    potEvent(AddContactEvent.errorEmptyAddContact);
+                }
+            });
+        }else{
+            potEvent(AddContactEvent.errorEmptyAddContact);
+        }
     }
 
     /**
      * metodos para saber si se guardo con exito o existe
      * algun error
      */
-    private void potSuccesFull(){
-        post(false);
-    }
-    private void postError(){
-        post(true);
+    private void potEvent(int event) {
+        post(event, null);
     }
 
-    private void post(boolean error) {
+    private void post(int eventType, String error) {
         AddContactEvent event = new AddContactEvent();
-            event.setErrorMesage(error);
+            event.setEventType(eventType);
+            if (error != null){
+                event.setErrorMessage(error);
+            }
             eventBus.post(event);
-
     }
 }

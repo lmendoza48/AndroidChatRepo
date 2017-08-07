@@ -5,6 +5,6 @@ package edu.galileo.android.androidchat.login;
  */
 public interface LoginRepository {
     void signIn(String email, String password);
-    void signUp(String email, String password);
+    void signUp(String email, String password, String name);
     void checkSession();
 }

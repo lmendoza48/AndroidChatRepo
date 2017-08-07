@@ -56,15 +56,38 @@ public class AddContactPresenterImpl implements AddContactPresenter {
     @Override
     @Subscribe
     public void onEventMainThread(AddContactEvent event) {
+            switch (event.getEventType()){
+                case AddContactEvent.addContactSucces:
+                    getSuccesContact();
+                    break;
+                case AddContactEvent.errorEmptyAddContact:
+                    getErrorEmptyContact();
+                    break;
+                case AddContactEvent.onFailedError:
+                    getContactNoAdd();
+                    break;
+            }
+    }
+
+    private void getContactNoAdd() {
         if (view != null){
             view.hideProgress();
             view.showInput();
-            if (event.isErrorMesage()){
-                view.contactNotAdded();
-            }else{
-                view.contactAdded();
-            }
+            view.contactNotAdded();
         }
-
+    }
+    private void getErrorEmptyContact() {
+        if (view != null){
+            view.hideProgress();
+            view.showInput();
+            view.contactEmpty();
+        }
+    }
+    private void getSuccesContact() {
+        if (view != null){
+            view.hideProgress();
+            view.showInput();
+            view.contactAdded();
+        }
     }
 }

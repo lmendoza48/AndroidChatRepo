@@ -28,14 +28,23 @@ public class LoginPresenterImpl implements LoginPresenter {
 
     @Override
     public void onCreate() {
-        eventBus.register(this);
     }
 
     @Override
     public void onDestroy() {
         loginView = null;
+    }
+
+    @Override
+    public void onResume() {
+        eventBus.register(this);
+    }
+
+    @Override
+    public void onPause() {
         eventBus.unregister(this);
     }
+
     /*
     * Metodo para validar usuario*/
     @Override
@@ -57,12 +66,12 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void registerNewUsers(String email, String password) {
+    public void registerNewUsers(String email, String password, String name) {
         if(loginView != null){
             loginView.disableInput();
             loginView.showProgress();
         }
-        loginInteractor.doSignUp(email,password);
+        loginInteractor.doSignUp(email,password,name);
     }
 
     /**

@@ -23,6 +23,7 @@ import edu.galileo.android.androidchat.entities.User;
  * clase para centralizar toda la logica de negocio
  */
 public class FirebaseHelper {
+
     private Firebase dataReference;
     private DatabaseReference mDatabase;
     private FirebaseAuth  myAuthentiUser;
@@ -30,8 +31,9 @@ public class FirebaseHelper {
     public  final static String USER_PATH ="users";
     private final static String CONTACT_PATH ="contacts";
     private final static String CHAT_PATH ="chats";
-    public static String EMAIL_PATH="email";
-    public static String STATE_PATH="online";
+    public static final String EMAIL_PATH="email";
+    public static final String STATE_PATH="online";
+    public static final String NAME_USER ="name";
     private final static String FIREBASE_URL="https://androidchat-4206f.firebaseio.com"; //"https://chatandroid-b3f8b.firebaseio.com"; // "https://androidchat-4206f.firebaseio.com";
 
     /**
@@ -168,9 +170,9 @@ public class FirebaseHelper {
                     DatabaseReference reference = getOneContactReference(email,myEmail);
                     reference.setValue(online); // aqui cambio el estatu de conexion mio en los contacto de la otra persona
                     // para ver si quiero cerrar session luego de iniciar
-                    if (signOff){
-                        myAuthentiUser.signOut();
-                    }
+                }
+                if (signOff){
+                    myAuthentiUser.signOut();
                 }
             }
             @Override

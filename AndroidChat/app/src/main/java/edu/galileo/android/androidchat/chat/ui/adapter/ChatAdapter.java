@@ -1,7 +1,9 @@
 package edu.galileo.android.androidchat.chat.ui.adapter;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -36,25 +39,34 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         return new ViewHolder(view);
     }
 
+    /**
+     * metodo para colocar los datos en mi view
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ChatMessage chatmessage = chatMessage.get(position);
         String msg = chatmessage.getMsg();
         holder.txtMessage.setText(msg);
+        holder.txtDate.setText(chatmessage.getDatteFormated());
 
-        int color =fetchColor(R.attr.colorPrimary);
         int gravity = Gravity.LEFT;
         // pregunto si no lo estoy enviando yo el msg cambio el color
         if (!chatmessage.isSentByMe()){
-            color = fetchColor(R.attr.colorAccent);
             gravity = Gravity.RIGHT;
         }
         // aqui estoy configurando
         // todo en mi layout para ver el msj dependiendo de quien lo envia
-        holder.txtMessage.setBackgroundColor(color);
+        holder.txtMessage.setBackgroundResource(!chatmessage.isSentByMe() ? R.drawable.bubble2 : R.drawable.bubble1);
+        holder.txtMessage.setPadding(30,5,30,5);
+        //holder.txtDate.setBackgroundResource(!chatmessage.isSentByMe() ? R.drawable.bubble1 : R.drawable.bubble2);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)holder.txtMessage.getLayoutParams();
-        params.gravity = gravity;
+        LinearLayout.LayoutParams params2 = (LinearLayout.LayoutParams)holder.txtDate.getLayoutParams();
+        params.gravity =  gravity;
+        params2.gravity = gravity;
         holder.txtMessage.setLayoutParams(params);
+        holder.txtDate.setLayoutParams(params2);
     }
 
     @Override
@@ -87,6 +99,8 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.txtMessage)
         TextView txtMessage;
+        @Bind(R.id.txtDate)
+        TextView txtDate;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

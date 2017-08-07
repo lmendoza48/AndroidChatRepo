@@ -6,6 +6,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.Date;
+
 import edu.galileo.android.androidchat.chat.events.ChatEvent;
 import edu.galileo.android.androidchat.domain.FirebaseHelper;
 import edu.galileo.android.androidchat.entities.ChatMessage;
@@ -31,6 +33,7 @@ public class ChatRepositoryImpl implements ChatRepository {
         ChatMessage message = new ChatMessage();
         message.setSender(helper.getAuthUserEmail());//estoy diciendo quien envia el msj
         message.setMsg(msg);
+        message.setDateMsg(new Date());
 
         DatabaseReference chatsReference = helper.getChatsReference(receiver);
         chatsReference.push().setValue(message);

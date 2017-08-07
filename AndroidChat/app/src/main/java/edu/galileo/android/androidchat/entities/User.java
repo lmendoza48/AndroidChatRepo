@@ -9,6 +9,7 @@ import java.util.Map;
 public class User {
     public final static boolean ONLINE = true;
     public final static boolean OFFNLINE = false;
+    String nameUsers;
     String email;
     boolean online;
     Map<String,Boolean> contacts;
@@ -38,6 +39,14 @@ public class User {
 
     public void setContacts(Map<String, Boolean> contacts) {
         this.contacts = contacts;
+    }
+
+    public String getNameUsers() {
+        return nameUsers;
+    }
+
+    public void setNameUsers(String nameUsers) {
+        this.nameUsers = nameUsers;
     }
 
     /**

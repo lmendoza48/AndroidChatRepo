@@ -64,7 +64,7 @@ public class LoginRepositoryImpl implements LoginRepository {
      * @param password
      */
     @Override
-    public void signUp(final String email, final String password) {
+    public void signUp(final String email, final String password,final String nameUser) {
         if (!email.isEmpty() && !password.isEmpty()) {
             final User userConect = new User();
             myAuthentiUser.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -73,6 +73,7 @@ public class LoginRepositoryImpl implements LoginRepository {
                     if (task.isSuccessful()) {
                         userConect.setEmail(email);
                         userConect.setOnline(User.ONLINE);
+                        userConect.setNameUsers(nameUser);
                         saveOfUser(userConect);
                         postEvent(LoginEvents.onSignUpSucces);
                         signIn(email,password);
@@ -99,6 +100,7 @@ public class LoginRepositoryImpl implements LoginRepository {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userReference.child(firebaseHelper.EMAIL_PATH).setValue(user.getEmail());
                 userReference.child(firebaseHelper.STATE_PATH).setValue(user.isOnline());
+                userReference.child(firebaseHelper.NAME_USER).setValue(user.getNameUsers());
             }
 
             @Override
@@ -113,14 +115,11 @@ public class LoginRepositoryImpl implements LoginRepository {
      */
     @Override
     public void checkSession() {
-        // datareference.getAuth es igual a myAuthentiUser.getCurrentUser()
        if (myAuthentiUser.getCurrentUser()!=null){
           getMyAuthenticUser();
         }else{
            postEvent(LoginEvents.onFailedToRecoverSession);
        }
-        //Log.e("LoginRepositoryImpl", "checksesion");
-       // postEvent(LoginEvents.onFailedToRecoverSession);
     }
 
     /**

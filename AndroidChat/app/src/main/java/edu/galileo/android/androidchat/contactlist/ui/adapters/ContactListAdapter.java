@@ -52,7 +52,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
         String email = user.getEmail();
         boolean online = user.isOnline();
-        String status = online ? "online" : "offLine";
+        String status = online ? "online" : "offline";
         int color = online ? Color.GREEN : Color.RED;
 
         holder.txtUser.setText(email);

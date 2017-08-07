@@ -26,7 +26,7 @@ public class LoginInteractorImpl implements LoginInteractor {
     }
 
     @Override
-    public void doSignUp(String email, String password) {
-        loginRepository.signUp(email, password);
+    public void doSignUp(String email, String password, String name) {
+        loginRepository.signUp(email, password,name);
     }
 }

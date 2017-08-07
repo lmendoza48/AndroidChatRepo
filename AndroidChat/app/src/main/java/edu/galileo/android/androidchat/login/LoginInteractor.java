@@ -6,5 +6,5 @@ package edu.galileo.android.androidchat.login;
 public interface LoginInteractor {
     void checkSession();
     void doSignIn(String email, String password);
-    void doSignUp(String email, String password);
+    void doSignUp(String email, String password, String name);
 }

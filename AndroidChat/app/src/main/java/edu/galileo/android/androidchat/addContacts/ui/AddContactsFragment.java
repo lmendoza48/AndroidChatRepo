@@ -100,6 +100,15 @@ public class AddContactsFragment extends DialogFragment implements AddContactVie
         editTextEmail.setError(getString(R.string.addcontact_error_message));
     }
 
+    /**
+     * metodo manejo cuando el campo esta vacio
+     */
+    @Override
+    public void contactEmpty() {
+        Toast.makeText(getActivity(),R.string.login_notice_message_signupSend,Toast.LENGTH_SHORT).show();
+        dismiss();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

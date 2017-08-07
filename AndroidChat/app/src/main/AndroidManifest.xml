@@ -15,6 +15,7 @@
             android:name=".login.ui.LoginActivity"
             android:noHistory="true"
             android:screenOrientation="portrait">
+
             <!-- para colocar orientacion todo: LandEscape "horizontal" y Portrait "vertical" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,8 +27,14 @@
             android:name=".contactlist.ui.ContactListActivity"
             android:label="@string/contactlist.title"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".chat.ui.ChatActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".chat.ui.ChatActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".addUser.ui.AddUsersActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".login.ui.LoginActivity" />
+        </activity>
     </application>
 
 </manifest>

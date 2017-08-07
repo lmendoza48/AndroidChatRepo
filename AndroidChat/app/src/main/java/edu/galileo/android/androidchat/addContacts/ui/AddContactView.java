@@ -12,4 +12,5 @@ public interface AddContactView {
 
     void contactAdded();
     void contactNotAdded();
+    void contactEmpty();
 }
