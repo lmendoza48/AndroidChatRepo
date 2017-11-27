@@ -1,9 +1,14 @@
 package edu.galileo.android.androidchat.chat.ui.adapter;
 
-import android.annotation.TargetApi;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
-import android.os.Build;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -11,14 +16,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import edu.galileo.android.androidchat.R;
+import edu.galileo.android.androidchat.contactlist.ui.ContactListActivity;
 import edu.galileo.android.androidchat.entities.ChatMessage;
 
 /**
@@ -51,6 +58,13 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         holder.txtMessage.setText(msg);
         holder.txtDate.setText(chatmessage.getDatteFormated());
 
+        //notification
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        int notificadionId = 001;
+        SimpleDateFormat dateU = new SimpleDateFormat("MMMM dd,yyyy HH:mm");
+
+        //*************************
+
         int gravity = Gravity.LEFT;
         // pregunto si no lo estoy enviando yo el msg cambio el color
         if (!chatmessage.isSentByMe()){
@@ -60,7 +74,6 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         // todo en mi layout para ver el msj dependiendo de quien lo envia
         holder.txtMessage.setBackgroundResource(!chatmessage.isSentByMe() ? R.drawable.bubble2 : R.drawable.bubble1);
         holder.txtMessage.setPadding(30,5,30,5);
-        //holder.txtDate.setBackgroundResource(!chatmessage.isSentByMe() ? R.drawable.bubble1 : R.drawable.bubble2);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)holder.txtMessage.getLayoutParams();
         LinearLayout.LayoutParams params2 = (LinearLayout.LayoutParams)holder.txtDate.getLayoutParams();
         params.gravity =  gravity;

@@ -33,6 +33,9 @@ public class ChatPresenterImpl implements ChatPresenter {
         sessionInteractor.changeConnectionStatus(User.OFFNLINE);
     }
 
+    /**
+     * metodo de mi actividad cuando paso de una a otra
+     */
     @Override
     public void onResume() {
         interactor.subscribe();
@@ -61,6 +64,10 @@ public class ChatPresenterImpl implements ChatPresenter {
         interactor.sendMessage(msg);
     }
 
+    /**
+     * aqui me traigo el evento el cual voy a mostrar es decir el mensaje
+     * @param event
+     */
     @Override
     @Subscribe
     public void onEventMainThread(ChatEvent event) {

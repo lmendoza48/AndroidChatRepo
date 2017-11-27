@@ -1,5 +1,7 @@
 package edu.galileo.android.androidchat.contactlist.ui;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -50,7 +52,19 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
         contactListPresenter = new ContactListPresenterImpl(this);
         contactListPresenter.onCreate();
         setupToolBar();
+        closeNotification();
+    }
 
+    /**
+     * para cerrar la notificacion
+     */
+
+    private void closeNotification() {
+        if (Context.NOTIFICATION_SERVICE!=null) {
+            String ns = Context.NOTIFICATION_SERVICE;
+            NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(ns);
+            nMgr.cancel(001);
+        }
     }
 
     /**

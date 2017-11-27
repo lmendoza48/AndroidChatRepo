@@ -105,7 +105,7 @@ public class FirebaseHelper {
 
     /**
      * Metodo que me devuelve los contactos
-     * @param email
+     * @param email usaurio autenticado
      * @return
      */
     public DatabaseReference getContactReference(String email){
@@ -116,15 +116,22 @@ public class FirebaseHelper {
         return getContactReference(getAuthUserEmail());
     }
 
-    /*metodo que me devuelve la referencia de un solo contacto
-    *MainEmail = correo del usuario
-    *ChildEmail = correo del contacto*/
+    /**
+     * metodo que me devuelve la referencia de un solo contacto
+     * @param mainEmail correo del usuario autenticado
+     * @param childEmail correo del contacto
+     * @return
+     */
     public DatabaseReference getOneContactReference(String mainEmail, String childEmail){
      String keyChildEmail = childEmail.replace(".","_");
      return getUserReference(mainEmail).child(CONTACT_PATH).child(keyChildEmail);
     }
 
-    /*metodo para obtner la referencia de los chat*/
+    /**
+     * metodo para obtner la referencia de los chat
+     * @param receiver usuario con el cual estoy conversando
+     * @return
+     */
     public DatabaseReference getChatsReference(String receiver){
         String keySender = getAuthUserEmail().replace(".", "_");
         String keyReceiver = receiver.replace(".","_");
@@ -135,7 +142,11 @@ public class FirebaseHelper {
         }
         return mDatabase.child(CHAT_PATH).child(keyChat);
     }
-    /* metodo para ver el estatus de conexion*/
+
+    /**
+     * metodo para ver el estatus de conexion
+     * @param online
+     */
     public void changeUserCOnectionStatus(boolean online){
         if (getMyUserReference() != null){
            Map<String,Object> updates = new HashMap<String, Object>();

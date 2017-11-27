@@ -70,8 +70,6 @@ public class ChatActivity extends AppCompatActivity implements ChatView {
      * ejmp de prueba:
      * ChatMessage msg1 = new ChatMessage();
      ChatMessage msg2 = new ChatMessage();
-     msg1.setMsg("Holaaa");
-     msg2.setMsg("Maricon");
      msg1.setSentByMe(true);
      msg2.setSentByMe(false);
      Arrays.asList(new ChatMessage[]{msg1,msg2})
@@ -96,7 +94,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView {
         presenter.setChatRecipient(recipient);
 
         boolean online = item.getBooleanExtra(ONLINE_KEY, false);
-        String status = online ? "online" : "offLine";
+        String status = online ? "online" : "offline";
         int color = online ? Color.GREEN : Color.RED;
 
         txtUser.setText(recipient);
@@ -134,7 +132,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView {
     @Override
     public void onMessageReceived(ChatMessage msg) {
         adapter.add(msg);
-        messageRecyclerView.scrollToPosition(adapter.getItemCount()-1);
+        messageRecyclerView.scrollToPosition(adapter.getItemCount()+1);
     }
 
     @OnClick(R.id.btnSendMessage)

@@ -10,7 +10,7 @@ import java.util.Date;
  * esta clase represente mi model y los atributos son los nodos en mi BD = Firebase
  * con esa anotacion le digo a firebase que no me tome ese valor
  */
-@JsonIgnoreProperties({"sentByMe"})
+@JsonIgnoreProperties({"sentByMe, dateMsg"})
 public class ChatMessage {
     private String msg;
     private String sender;
